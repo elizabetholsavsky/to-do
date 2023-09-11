@@ -23,9 +23,9 @@ function App() {
         <button onClick={addTodo}>+</button>
       </div>
       <div className="container">
-        {todos.map((todo) => {
+        {todos.map((todo, index) => {
             return (
-            <div className="todo">
+            <div className="todo" key={index}>
               <p>{todo}</p>
               <div className="actions">
                 <input type="checkbox" />
