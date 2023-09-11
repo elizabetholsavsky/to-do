@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import InputContainer from './components/InputContainer';
+import TodoContainer from './components/TodoContainer';
 import './App.css';
 
 function App() {
@@ -27,24 +29,14 @@ function App() {
   return (
     <main>
       <h1>To Do List</h1>
-      <div className="input-container">
-        <input type="text" placeholder="Enter To Do" value={inputVal} onChange={writeTodo}/>
-        <button onClick={addTodo}>+</button>
-      </div>
-      <div className="container">
-        {todos.map((todo, index) => {
-            return (
-            <div className="todo" key={index}>
-              <p>{todo}</p>
-              <div className="actions">
-                <input type="checkbox" />
-                <button onClick={() => deleteTodo(index)}>Delete</button>
-              </div>
-            </div>
-            );
-          })}
-        
-      </div>
+      <InputContainer 
+        inputVal={inputVal} 
+        writeTodo={writeTodo} 
+        addTodo={addTodo}
+      />
+      <TodoContainer
+        todos={todos}
+        deleteTodo={deleteTodo}/>
     </main>
   )
 }
