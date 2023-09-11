@@ -7,12 +7,18 @@ function App() {
 
   function writeTodo(e) {
     setInputVal(e.target.value)
-    console.log(inputVal);
   }
 
   function addTodo() {
     setTodos(prevTodos => [...prevTodos, inputVal]);
-    console.log(todos);
+  }
+
+  function deleteTodo(todoIndex) {
+    setTodos((prevTodos) => 
+    prevTodos.filter((prevTodo, prevTodoIndex) => {
+      return prevTodoIndex != todoIndex;
+      })
+    );
   }
 
   return (
@@ -29,7 +35,7 @@ function App() {
               <p>{todo}</p>
               <div className="actions">
                 <input type="checkbox" />
-                <button>Delete</button>
+                <button onClick={() => deleteTodo(index)}>Delete</button>
               </div>
             </div>
             );
