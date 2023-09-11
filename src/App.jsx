@@ -10,7 +10,10 @@ function App() {
   }
 
   function addTodo() {
-    setTodos(prevTodos => [...prevTodos, inputVal]);
+    if (inputVal != "") {
+      setTodos(prevTodos => [...prevTodos, inputVal]);
+      setInputVal("")
+    }
   }
 
   function deleteTodo(todoIndex) {
@@ -25,7 +28,7 @@ function App() {
     <main>
       <h1>To Do List</h1>
       <div className="input-container">
-        <input type="text" placeholder="Enter To Do" onChange={writeTodo}/>
+        <input type="text" placeholder="Enter To Do" value={inputVal} onChange={writeTodo}/>
         <button onClick={addTodo}>+</button>
       </div>
       <div className="container">
