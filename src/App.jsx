@@ -1,30 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import InputContainer from './components/InputContainer';
 import TodoContainer from './components/TodoContainer';
 import './App.css';
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  // initialize state to the value from local storage or an empty array if it doesn't exist
+  const [todos, setTodos] = useState(() => {
+    const storedTodos = localStorage.getItem('todos');
+    return storedTodos ? JSON.parse(storedTodos) : [];
+  });
   const [inputVal, setInputVal] = useState("");
 
   function writeTodo(e) {
-    setInputVal(e.target.value)
+    setInputVal(e.target.value);
   }
 
   function addTodo() {
-    if (inputVal != "") {
+    if (inputVal !== "") {
       setTodos(prevTodos => [...prevTodos, inputVal]);
-      setInputVal("")
+      setInputVal("");
     }
   }
 
   function deleteTodo(todoIndex) {
-    setTodos((prevTodos) => 
-    prevTodos.filter((prevTodo, prevTodoIndex) => {
-      return prevTodoIndex != todoIndex;
-      })
+    setTodos(prevTodos =>
+      prevTodos.filter((_, prevTodoIndex) => prevTodoIndex !== todoIndex)
     );
   }
+
+  // update local storage whenever the todos state changes
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
 
   return (
     <main>
@@ -36,9 +43,10 @@ function App() {
       />
       <TodoContainer
         todos={todos}
-        deleteTodo={deleteTodo}/>
+        deleteTodo={deleteTodo}
+      />
     </main>
-  )
+  );
 }
 
-export default App
+export default App;
